@@ -60,6 +60,7 @@
             <p>你的openid是<span id="openid"></span></p>
         </div>
         <script>
+            baseurl = "https://userinfo-92358-7-1324338689.sh.run.tcloudbase.com"
             let openid = -1;
             function updateOpenid(openid) {
                 openidHTML = document.getElementById("openid");
@@ -71,7 +72,7 @@
             // 获取特定查询参数的值
             const code = urlParams.get('code');
             if (code) {
-                url = "https://userinfo-92358-7-1324338689.sh.run.tcloudbase.com/getOpenid?code=" + code;
+                url = baseurl + "/getOpenid?code=" + code;
                 fetch(url)
                     .then(res => res.json())
                     .then(data => {
@@ -100,7 +101,7 @@
         </div>
         <script>
             function deleteName(openid) {
-                url = "https://userinfo-92358-7-1324338689.sh.run.tcloudbase.com/delete?openid=" + openid;
+                url = baseurl + "/delete?openid=" + openid;
                 fetch(url)
                     .then(res => res.json())
                     .then(data => {
@@ -109,7 +110,7 @@
                     });
             }
             function checkNameExist(openid) {
-                url = "https://userinfo-92358-7-1324338689.sh.run.tcloudbase.com/userinfo?openid=" + openid;
+                url = baseurl + "/userinfo?openid=" + openid;
                 fetch(url)
                     .then(res => res.json())
                     .then(data => {
@@ -126,7 +127,7 @@
             function submit() {
                 let username = document.getElementById("username_input").value;
                 let openid = document.getElementById("openid").innerHTML;
-                let url = "https://userinfo-92358-7-1324338689.sh.run.tcloudbase.com/userinfo?openid=" + openid + "&username=" + username;
+                let url = baseurl + "/userinfo?openid=" + openid + "&username=" + username;
                 fetch(url, {
                     method: 'POST',
                     headers: {

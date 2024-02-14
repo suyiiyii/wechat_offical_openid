@@ -21,6 +21,12 @@ access: "default"
 vars: # 全局变量
   region: "cn-shenzhen"
 
+actions:
+  pre-deploy:
+    - run: s deploy -t s.oss.yaml
+      path: .
+
+
 resources:
   hello_world:
     # 如果只想针对 hello_world 下面的业务进行相关操作，可以在命令行中加上 hello_world，例如：

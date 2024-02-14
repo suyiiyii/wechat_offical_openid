@@ -1,0 +1,20 @@
+edition: 1.0.0 # 命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
+name: hello-serverless-dev-app # 项目名称
+access: "default"
+
+services:
+  front:
+    component: oss
+    props:
+      bucket: auto
+      codeUri: ./front
+      region: cn-shenzhen
+      acl: public-read # 读写权限
+      subDir: /
+      website:
+        index: index.html
+        error: 404.html
+        subDirType: index
+      customDomains: # OSS 绑定域名
+        - domainName: wx.suyiiyii.top
+          protocol: HTTP
