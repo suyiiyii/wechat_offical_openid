@@ -50,7 +50,7 @@ resources:
           - python3
           - server.py
       layers:
-        - acs:fc:cn-shenzhen:1759622571481595:layers/python_with_fastapi_debian10/versions/1
+        - acs:fc:cn-shenzhen:1759622571481595:layers/python_wxopenid/versions/1
       logConfig: 
         enableInstanceMetrics: true
         enableRequestMetrics: true
