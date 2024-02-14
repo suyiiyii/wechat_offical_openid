@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息获取测试</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <!-- <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/2.3.0/weui.min.css" /> -->
+    <style>
+        #openid_show {
+            text-align: center;
+        }
+
+        #openid_div {
+            background-color: #f4f4f4;
+            padding: 20px;
+            margin: 20px;
+        }
+
+        #username_sec {
+            text-align: center;
+        }
+
+        #username_show {
+            display: none;
+            background-color: #f4f4f4;
+            padding: 20px;
+            margin: 20px;
+        }
+
+        #username_post {
+            display: none;
+            background-color: #f4f4f4;
+            padding: 20px;
+            margin: 20px;
+        }
+
+        #search_show {
+            text-align: center;
+        }
+
+        #tab {
+            margin: 20px;
+            border-collapse: collapse;
+            border: 1px solid black;
+        }
+
+        #tab td {
+            border: 1px solid black;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <section id="openid_show">
+        <div id="openid_div">
+            <h1>OpenID</h1>
+            <p>你的openid是<span id="openid"></span></p>
+        </div>
+        <script>
+            let openid = -1;
+            function updateOpenid(openid) {
+                openidHTML = document.getElementById("openid");
+                openidHTML.innerHTML = String(openid);
+            }
+            // 获取当前页面的URL
+            const urlParams = new URLSearchParams(window.location.search);
+
+            // 获取特定查询参数的值
+            const code = urlParams.get('code');
+            if (code) {
+                url = "https://userinfo-92358-7-1324338689.sh.run.tcloudbase.com/getOpenid?code=" + code;
+                fetch(url)
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        updateOpenid(data)
+                        openid = data
+                        checkNameExist(openid)
+                    });
+            }
+        </script>
+    </section>
+
+    <section id="username_sec">
+        <!-- <h1>用户名</h1> -->
+        <div id="username_show" style="display: none;">
+            <p> 你的用户名是：<span id="username"></span></p>
+            <input type="button" value="删除用户名" onclick="deleteName(openid)">
+        </div>
+        <div id="username_post" style="display: none;">
+            <form id=" username_from">
+                <label for="username_input">请设置你的用户名：</label>
+                <input type="text" id="username_input" name="username" required>
+            </form>
+            <input type="button" value="提交" onclick="submit()">
+
+        </div>
+        <script>
+            function deleteName(openid) {
+                url = "https://userinfo-92358-7-1324338689.sh.run.tcloudbase.com/delete?openid=" + openid;
+                fetch(url)
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        document.getElementById("username_sec").innerHTML = "<p>用户名已删除，重新打开页面</p>";
+                    });
+            }
+            function checkNameExist(openid) {
+                url = "https://userinfo-92358-7-1324338689.sh.run.tcloudbase.com/userinfo?openid=" + openid;
+                fetch(url)
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data != "not found openid") {
+                            document.getElementById("username_show").style.display = "block";
+                            document.getElementById("username").innerHTML = data;
+                        } else {
+                            document.getElementById("username_post").style.display = "block";
+                        }
+                    });
+            }
+
+            function submit() {
+                let username = document.getElementById("username_input").value;
+                let openid = document.getElementById("openid").innerHTML;
+                let url = "https://userinfo-92358-7-1324338689.sh.run.tcloudbase.com/userinfo?openid=" + openid + "&username=" + username;
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        openid: openid,
+                        username: username
+                    })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        document.getElementById("username_show").style.display = "block";
+                        document.getElementById("username").innerHTML = username;
+                        document.getElementById("username_post").style.display = "none";
+                    });
+            }
+        </script>
+    </section>
+
+    <section id="search_show">
+        <h1>以表格的形式显示当前的查询参数</h1>
+        <!-- 以表格的形式显示当前的查询参数 -->
+        <table id="tab">
+            <tr>
+                <td>参数名</td>
+                <td>参数值</td>
+            </tr>
+        </table>
+        <script>
+            // 使用js获取当前的查询参数
+            let search = window.location.search;
+            search = search.slice(1, search.length);
+            let arr = search.split("&");
+            let tab = document.getElementById("tab");
+            for (let i = 0; i < arr.length; i++) {
+                let tr = document.createElement("tr");
+                let td1 = document.createElement("td");
+                let td2 = document.createElement("td");
+                let str = arr[i].split("=");
+                td1.innerHTML = str[0];
+                td2.innerHTML = str[1];
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tab.appendChild(tr);
+            }
+
+        </script>
+    </section>
+</body>
