@@ -52,7 +52,7 @@ resources:
       customRuntimeConfig:
         port: 9000
         command:
-          - python
+          - python3
           - server.py
       # environmentVariables:
       #   PATH: >-
