@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Suyiiyii</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/2.3.0/weui.min.css" />
+</head>
+
+<body>
+    <h1>以表格的形式显示当前的查询参数</h1>
+    <!-- 以表格的形式显示当前的查询参数 -->
+    <table id="tab">
+        <tr>
+            <td>参数名</td>
+            <td>参数值</td>
+        </tr>
+    </table>
+    <script>
+        // 使用js获取当前的查询参数
+        let search = window.location.search;
+        search = search.slice(1, search.length);
+        let arr = search.split("&");
+        let tab = document.getElementById("tab");
+        for (let i = 0; i < arr.length; i++) {
+            let tr = document.createElement("tr");
+            let td1 = document.createElement("td");
+            let td2 = document.createElement("td");
+            let str = arr[i].split("=");
+            td1.innerHTML = str[0];
+            td2.innerHTML = str[1];
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tab.appendChild(tr);
+        }
+
+
+        // 如果查询参数存在code，则使用code获取用户的openid
+        let code = getQueryletiable("code");
+        if (code) {
+            url = "https://userinfo-92358-7-1324338689.sh.run.tcloudbase.com/getOpenid?code=" + code;
+            fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                
+            });
+        }
+    </script>
+</body>
