@@ -50,7 +50,7 @@ resources:
       code: ./code # 代码路径
       instanceConcurrency: 50 # 并发实例个数
       customRuntimeConfig:
-        port: 9000
+        port: 8000
         command:
           - python3
           - server.py
