@@ -47,7 +47,7 @@ resources:
       customRuntimeConfig:
         port: 9000
         command:
-          - python3
+          - python
           - server.py
       layers:
         - acs:fc:cn-shenzhen:1759622571481595:layers/python_wxopenid/versions/1
