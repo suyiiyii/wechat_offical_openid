@@ -39,6 +39,8 @@ resources:
     props:
       region: ${vars.region}              # 关于变量的使用方法，可以参考：https://docs.serverless-devs.com/serverless-devs/yaml#%E5%8F%98%E9%87%8F%E8%B5%8B%E5%80%BC
       functionName: "wx_userinfo_back"  # 函数名称
+      layers:
+        - acs:fc:cn-shenzhen:1759622571481595:layers/python_wxopenid/versions/1
       runtime: custom.debian10 # 运行时
       # description: 'hello world by serverless devs' # 函数描述
       timeout: 10 # 超时时间
@@ -55,8 +57,6 @@ resources:
       # environmentVariables: #环境变量
       #   PYTHONPATH: /code/3rd-packages
       #   PATH: /code/3rd-packages/bin:/var/fc/lang/python3.10/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin
-      layers:
-        - acs:fc:cn-shenzhen:1759622571481595:layers/python_wxopenid/versions/1
       logConfig: 
         enableInstanceMetrics: true
         enableRequestMetrics: true
