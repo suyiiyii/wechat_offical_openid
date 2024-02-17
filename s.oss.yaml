@@ -7,7 +7,7 @@ services:
     component: oss
     props:
       bucket: auto
-      codeUri: ./front
+      codeUri: ./frontend
       region: cn-shenzhen
       acl: public-read # 读写权限
       subDir: /
