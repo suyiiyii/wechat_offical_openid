@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import sys
+import os
 
 sys.path.append('/opt/python')
 
@@ -9,10 +10,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, Depends, Request
 import aiohttp
 
-appid = 'wx30327296cd76d034'
-appsecret = '65b0c394688d34a8a693d6b383341bbd'
+appid = os.environ.get('appid')
+appsecret = os.environ.get('appsecret')
 
-DATABASE_URL = "mysql+pymysql://root:mysql_wx@mc.lipids.top:49155/syy"
+# sample: postgresql://user:password@host:port/dbname
+DATABASE_URL = os.environ.get('DATABASE_URL')
 
 engine = create_engine(DATABASE_URL)
 db_session = scoped_session(
